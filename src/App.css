@@ -1,49 +1,103 @@
+/* --- 共通レイアウト --- */
 .App {
   text-align: center;
-  padding: 20px;
-  max-width: 900px; /* PCでの最大幅を制限して見やすく */
+  padding: 15px;
+  max-width: 600px; /* スマホ・PC両方で使いやすい幅 */
   margin: 0 auto;
+  font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
-/* TODOリスト全体のスタイル */
-ul {
-  list-style: none;
-  padding: 0;
+/* --- お天気セクション（サトルさん仕様） --- */
+.weather-container {
+  background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 25px;
+  border: 1px solid #bae6fd;
+  box-shadow: 0 4px 15px rgba(186, 230, 253, 0.3);
 }
 
-li, .todo-item {
+/* --- TODOフォーム：ここが魔法の二段構え --- */
+.todo-form {
   display: flex;
-  justify-content: space-between; /* PCでは文字とボタンを両端に */
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 30px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+}
+
+.todo-input {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+/* 優先度とボタンを横に並べる */
+.input-row-bottom {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.priority-select {
+  flex: 1; /* 50%幅 */
+  height: 48px;
+  padding: 0 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 15px;
+}
+
+.add-button {
+  flex: 1; /* 50%幅 */
+  height: 48px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* --- TODOリストアイテム（文字崩れ防止） --- */
+.todo-item {
+  display: flex;
   align-items: center;
-  padding: 12px 20px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #eee;
-  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 12px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  border-left: 6px solid #ccc;
+  gap: 12px;
+}
+
+.todo-content {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 12px;
 }
 
 .todo-text {
-  flex: 1; /* 文字が広がるようにする */
+  flex: 1;
   text-align: left;
+  font-size: 16px;
+  word-break: break-all;
 }
 
-/* --- スマホ（縦長画面）の時だけ縦並びにする魔法 --- */
-@media (max-width: 600px) {
-  li, .todo-item {
-    flex-direction: column; /* スマホでは縦に並べる */
-    align-items: flex-start;
-    padding: 15px;
-  }
+/* 優先度カラー */
+.priority-high { border-left-color: #ff4757; }
+.priority-medium { border-left-color: #ffa502; }
+.priority-low { border-left-color: #2ed573; }
 
-  .todo-text {
-    width: 100%;
-    margin-bottom: 10px;
-    word-break: break-all;
-  }
-
-  .todo-actions, .button-group {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-  }
+.todo-actions {
+  display: flex;
+  gap: 8px;
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TodoFormProps } from './types';
 
-export　function TodoForm({ onAddTodo }: TodoFormProps) {
+export function TodoForm({ onAddTodo }: TodoFormProps) {
   const [formData, setFormData] = useState({
     text: '',
     priority: 'medium'
@@ -61,15 +61,15 @@ export　function TodoForm({ onAddTodo }: TodoFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="todo-form">
-      <div className="form-group">
-        <input
-          type="text"
-          name="text"
-          value={formData.text}
-          onChange={handleChange}
-          placeholder="新しいTODOを入力してください"
-          className="todo-input"
-        />
+      <input
+        type="text"
+        name="text"
+        value={formData.text}
+        onChange={handleChange}
+        placeholder="新しいTODOを入力してください"
+        className="todo-input"
+      />
+      <div className="input-row-bottom">
         <select
           name="priority"
           value={formData.priority}
