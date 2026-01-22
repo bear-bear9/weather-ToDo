@@ -22,7 +22,6 @@ function WeatherPage({
     const [error, setError] = useState('');
 
     const fetchWeather = async (cityName: string) => {
-        console.log("鍵の中身:", API_KEY);
         const cityNameJpMatch = cityNameJp[cityName] || cityName;
         try {
             const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityNameJpMatch}&appid=${API_KEY}&units=metric&lang=ja`;
@@ -30,7 +29,6 @@ function WeatherPage({
 
             setWeather(response.data);
             setError('');
-            console.log("お天気更新:", response.data.name, response.data.main.temp);
         } catch (err) {
             setError('都市名が見つかりません');
             setWeather(null);

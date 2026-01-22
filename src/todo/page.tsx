@@ -69,7 +69,6 @@ export default function TodoPage() {
     return true;
   });
 
-  console.log("レンダー時のtodos:", todos);
   return (
     <div className="todo-container">
       <WeatherPage
@@ -80,7 +79,7 @@ export default function TodoPage() {
       {/* バグ発生個所：動的キーにしないとヘッダーのカウントがリアルタイムで更新できなかった */}
       <TodoHeader
         key={`header-${todos.length}-${todos.filter(t => t.completed).length}`}
-        title="React TODOアプリ"
+        title="ToDo with 天気"
         totalCount={todos.length}
         completedCount={todos.filter(t => t.completed).length}
         activeCount={todos.length - todos.filter(t => t.completed).length}
