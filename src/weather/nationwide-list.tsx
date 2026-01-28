@@ -56,50 +56,83 @@ const WeatherRow = ({ pref, weatherFilter }: { pref: string, weatherFilter: stri
       animation: 'fadeIn 0.3s ease'
     }}>
       {/* 左側：県名 ＋ 雨アラートバッジ */}
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-        <span style={{ fontWeight: 'bold', color: '#333' }}>{pref}</span>
+      <div style={{
+        flex: 1,
+        display: 'flex',
+        alignItems: 'center',
+        gap: '4px',
+        flexWrap: 'wrap',
+        minWidth: 0,
+        overflow: 'hidden'
+      }}>
+        <span style={{
+          fontWeight: 'bold',
+          color: '#333',
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          maxWidth: '80px'
+        }}>
+          {pref}
+        </span>
 
         {needsDetailAlert && (
           <span style={{
-            fontSize: '0.65rem',
+            fontSize: '0.6rem',
             backgroundColor: '#fff1f0',
             color: '#cf1322',
-            padding: '2px 6px',
+            padding: '1px 4px',
             borderRadius: '4px',
             border: '1px solid #ffa39e',
             fontWeight: 'bold',
-            whiteSpace: 'nowrap'
+            whiteSpace: 'nowrap',
+            flexShrink: 0
           }}>
-            ☔ 雨の恐れ！詳細をチェック
+            ☔ 雨注意！詳細→
           </span>
         )}
       </div>
 
       {/* 右側：数値・アイコン・詳細ボタン */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        marginLeft: 'auto',
+        flexShrink: 0
+      }}>
         {data ? (
           <>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-              <span style={{ fontSize: '0.95rem', fontWeight: 'bold' }}>{data.temp}℃</span>
-              {/* 気圧: 低い時だけ「⚠️」を出す */}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-end',
+              lineHeight: '1.2'
+            }}>
+              <span style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>{data.temp}℃</span>
               <span style={{
-                fontSize: '0.75rem',
+                fontSize: '0.7rem',
                 color: isLowPressure ? '#e53935' : '#888',
                 fontWeight: isLowPressure ? 'bold' : 'normal',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '2px'
+                gap: '1px'
               }}>
-                {isLowPressure && <span>⚠️</span>} {data.pressure}hPa
+                {isLowPressure && <span style={{ fontSize: '0.6rem' }}>⚠️</span>}
+                {data.pressure}<span style={{ fontSize: '0.6rem' }}>hPa</span>
               </span>
             </div>
-            <WiComp weather={data.main} size={30} />
+            <WiComp weather={data.main} size={24} />
           </>
         ) : (
           <span style={{ fontSize: '0.8rem', color: '#ccc' }}>...</span>
         )}
 
-        <Link to={`/detail/${pref}`} className="detail-link">
+        <Link to={`/detail/${pref}`} className="detail-link" style={{
+          padding: '4px 8px',
+          fontSize: '0.75rem',
+          whiteSpace: 'nowrap'
+        }}>
           詳細
         </Link>
       </div>
@@ -171,7 +204,7 @@ const WeatherList = () => {
             className={`filter-btn ${weatherFilter === opt.value ? 'active' : ''}`}
             onClick={() => setWeatherFilter(opt.value)}
             style={{
-              flex: 1, 
+              flex: 1,
               padding: '6px 2px',
               fontSize: '11px',
               whiteSpace: 'nowrap',
