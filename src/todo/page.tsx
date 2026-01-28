@@ -159,7 +159,7 @@ export default function TodoPage() {
       />
 
       {/* 🌟 フィルターエリア */}
-      <div style={{ display: 'flex', justifyContent: 'center', padding: '8px 0' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '2px 0' }}>
         <TodoFilter
           key={`filter-${todos.length}-${todos.filter(t => t.completed).length}`}
           totalCount={todos.length}
@@ -171,7 +171,7 @@ export default function TodoPage() {
       </div>
 
       {/* リストエリア */}
-      <div className="todo-list">
+      <div className="todo-list" style={{ marginTop: '0px' }}>
         {todoFiltermethod.map(todo => (
           <TodoItem key={todo.id} {...todo} onToggle={toggleTodo} onDelete={deleteTodo} onEdit={editTodo} />
         ))}

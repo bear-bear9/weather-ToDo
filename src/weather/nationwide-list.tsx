@@ -155,12 +155,28 @@ const WeatherList = () => {
         }}
       />
 
-      <div className="filter-container">
+      <div className="filter-container" style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '4px',
+        flexWrap: 'nowrap',
+        overflowX: 'hidden',
+        width: '100%',
+        maxWidth: '400px',
+        margin: '0 auto 15px'
+      }}>
         {filterOptions.map(opt => (
           <button
             key={opt.value}
             className={`filter-btn ${weatherFilter === opt.value ? 'active' : ''}`}
             onClick={() => setWeatherFilter(opt.value)}
+            style={{
+              flex: 1, 
+              padding: '6px 2px',
+              fontSize: '11px',
+              whiteSpace: 'nowrap',
+              minWidth: '0'
+            }}
           >
             {opt.label}
           </button>
