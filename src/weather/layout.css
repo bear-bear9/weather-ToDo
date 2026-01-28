@@ -80,7 +80,196 @@
   animation: fadeIn 0.5s ease-out;
 }
 
+.nationwide-mini-button {
+  background: white;
+  color: #007bff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  text-decoration: none;
+  border: 1px solid #bae6fd;
+  box-shadow: 0 2px 4px rgba(186, 230, 253, 0.3);
+  transition: all 0.2s ease;
+  font-weight: bold;
+}
+
+/* ボタンの可視制度を向上 */
+.nationwide-mini-button:hover {
+  background-color: #f0f9ff;
+  border-color: #007bff;
+  transform: translateY(-1px);
+}
+
+/* 中寄せ */
+.weather-search-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+/* アイコンサイズの調整 */
+.simple-list div {
+  padding: 8px 12px !important;
+  font-size: 0.95rem; 
+}
+
+.simple-list svg, 
+.simple-list i {
+  width: 20px !important;
+  height: 20px !important;
+  font-size: 20px !important;
+}
+
+.back-link-container {
+  margin-top: 25px;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.back-link {
+  color: #888;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border-bottom: 1px solid #ddd;
+  transition: all 0.3s ease;
+}
+
+.nationwide-container {
+  padding: 20px;
+  text-align: center;
+  background-color: #eefaf6;
+  min-height: 100vh;
+  border-radius: 15px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+}
+
+.detail-info-grid {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  max-width: 450px;
+  margin-top: 20px;
+}
+
+.detail-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 横方向の中央揃え */
+  justify-content: center;
+  width: 100%;
+  max-width: 600px; /* 広がりすぎないように制限 */
+  margin: 0 auto;    /* 画面の左右中央に配置 */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* カードを並べるコンテナ */
+.detail-info-grid {
+  display: flex;
+  flex-direction: row; /* 横並び */
+  justify-content: center; /* 子要素を中央に寄せる */
+  align-items: stretch;    /* 高さを揃える */
+  gap: 12px;
+  width: 100%;             /* 親の幅いっぱいに使う */
+  margin: 20px 0;
+}
+
+/* 各カードの幅調整 */
+.info-item {
+  flex: 1;
+  min-width: 0;
+  background: white;
+  padding: 15px 5px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8px 20px rgba(186, 230, 253, 0.3);
+}
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 15px 0 25px 0;
+}
+
+/* ボタンの基本形 */
+.filter-btn {
+  padding: 8px 18px;
+  border-radius: 25px;
+  border: 2px solid #e0f2f1;
+  background-color: white;
+  color: #546e7a; 
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* ホバーした時 */
+.filter-btn:hover {
+  background-color: #f0fdfa;
+  border-color: #b2dfdb;
+  transform: translateY(-1px);
+}
+
+/* 選択されている状態（active） */
+.filter-btn.active {
+  background-color: #546e7a;
+  border-color: #546e7a;
+  color: white;
+  box-shadow: 0 4px 10px rgba(84, 110, 122, 0.3);
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(5px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+.detail-link {
+  font-size: 0.85rem;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 15px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.detail-link:hover {
+  background: #e3f2fd;
+}
+
+/* 予報セクション全体の幅を親に固定 */
+.forecast-section {
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden; /* ここからはみ出させない */
+}
+
+/* スクロールエリアの設定：ここが重要！ */
+.forecast-scroll-container {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;      /* 横スクロールを許可 */
+  overflow-y: hidden;    /* 縦は隠す */
+  width: 100%;           /* 親要素（.forecast-section）と同じ幅にする */
+  gap: 12px;
+  padding: 10px 0 20px 0;
+  -webkit-overflow-scrolling: touch; /* スマホでスルスル動く */
+}
+
+/* スクロールバーを見えなくする */
+.forecast-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+.forecast-scroll-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

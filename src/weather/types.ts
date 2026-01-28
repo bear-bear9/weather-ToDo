@@ -13,6 +13,7 @@ export interface WeatherData {
 
 export interface WiCompProps {
   weather: string;
+  size?: number; // アイコン固定値100を解除するために指定
 }
 
 export interface WeatherProps {

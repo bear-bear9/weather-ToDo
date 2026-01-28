@@ -254,6 +254,12 @@
   font-size: 0.8em;
   color: #666;
 }
+
+.navigation-section {
+  margin: 15px 0;
+  text-align: center;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

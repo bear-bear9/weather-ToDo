@@ -1,13 +1,11 @@
-/* --- 共通レイアウト --- */
 .App {
   text-align: center;
   padding: 15px;
-  max-width: 600px; /* スマホ・PC両方で使いやすい幅 */
+  max-width: 600px;
   margin: 0 auto;
   font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
-/* --- お天気セクション（サトルさん仕様） --- */
 .weather-container {
   background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
   border-radius: 16px;
@@ -17,7 +15,6 @@
   box-shadow: 0 4px 15px rgba(186, 230, 253, 0.3);
 }
 
-/* --- TODOフォーム：ここが魔法の二段構え --- */
 .todo-form {
   display: flex;
   flex-direction: column;
@@ -37,7 +34,6 @@
   box-sizing: border-box;
 }
 
-/* 優先度とボタンを横に並べる */
 .input-row-bottom {
   display: flex;
   gap: 10px;
@@ -45,7 +41,7 @@
 }
 
 .priority-select {
-  flex: 1; /* 50%幅 */
+  flex: 1;
   height: 48px;
   padding: 0 10px;
   border: 1px solid #ddd;
@@ -55,7 +51,7 @@
 }
 
 .add-button {
-  flex: 1; /* 50%幅 */
+  flex: 1;
   height: 48px;
   background-color: #007bff;
   color: white;
@@ -65,7 +61,6 @@
   cursor: pointer;
 }
 
-/* --- TODOリストアイテム（文字崩れ防止） --- */
 .todo-item {
   display: flex;
   align-items: center;
@@ -92,7 +87,6 @@
   word-break: break-all;
 }
 
-/* 優先度カラー */
 .priority-high { border-left-color: #ff4757; }
 .priority-medium { border-left-color: #ffa502; }
 .priority-low { border-left-color: #2ed573; }
@@ -100,4 +94,67 @@
 .todo-actions {
   display: flex;
   gap: 8px;
+}
+
+.fenrir-power {
+  background-color: #ffffff;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  
+  color: #333; 
+  padding: 15px;
+  margin: 15px 0;
+  text-align: center;
+  font-weight: bold;
+  
+  box-shadow: none;
+  cursor: pointer;
+
+  animation: stealth-glow 4s infinite alternate ease-in-out;
+}
+
+.fenrir-power:active {
+  transform: scale(0.98);
+  background-color: #f0f7ff;
+}
+
+@keyframes stealth-glow {
+  0% {
+    border-color: #ddd;
+    background-color: #ffffff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+  }
+  100% {
+    border-color: #a0c4ff;
+    background-color: #f0f7ff; 
+    text-shadow: 0 0 8px rgba(160, 196, 255, 0.5);
+  }
+}
+
+/* 一括操作ボタンの共通スタイル */
+.btn-small, .btn-small-danger, .bulk-actions button {
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  margin-left: 12px; 
+}
+
+/* 最初のボタンだけ左マージンを消して位置を揃える */
+.bulk-actions button:first-child {
+  margin-left: 0;
+}
+
+/* 全削除ボタンは少しだけ特別感を（色を抑えた赤系など） */
+.btn-small-danger {
+  color: #d9534f;
+  border-color: #ebccd1;
+}
+
+.btn-small-danger:hover {
+  background-color: #f2dede;
 }

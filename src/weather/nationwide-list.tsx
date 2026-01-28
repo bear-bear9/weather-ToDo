@@ -1,0 +1,192 @@
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { allPrefectures, regionData, cityNameJp } from './utils';
+import WiComp from './WiComp';
+import './layout.css';
+
+const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+
+/**
+ * WeatherRow: 各県の天気を1行分管理するコンポーネント
+ * 絞り込み ＋ 低気圧アラート ＋ 雨予報バッジ（詳細への誘導）付き
+ */
+const WeatherRow = ({ pref, weatherFilter }: { pref: string, weatherFilter: string }) => {
+  const [data, setData] = useState<{ temp: number, main: string, pressure: number } | null>(null);
+
+  useEffect(() => {
+    const fetchSmallWeather = async () => {
+      // バグ発生個所：高知県がインドのkochinを参照してしまう問題への対策済み
+      const pureName = pref.replace(/[都府県道]$/, "");
+      const englishName = cityNameJp[pureName] || cityNameJp[pref] || pureName;
+
+      try {
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${englishName},jp&appid=${API_KEY}&units=metric`;
+        const res = await axios.get(url);
+        setData({
+          temp: Math.round(res.data.main.temp),
+          main: res.data.weather[0].main,
+          // 自分が低気圧でしんどいので、気圧機能を追加
+          pressure: res.data.main.pressure
+        });
+      } catch (e) {
+        console.error(`${pref}のデータ取得に失敗:`, e);
+      }
+    };
+    fetchSmallWeather();
+  }, [pref]);
+
+  // フィルタリング: 一致しない場合はnullを返して行ごと非表示
+  if (data && weatherFilter !== "All" && data.main !== weatherFilter) {
+    return null;
+  }
+
+  // アラート判定（1010hPa以下を注意に設定）
+  const isLowPressure = data && data.pressure <= 1010;
+  // 雨、または詳細を見てほしい天候
+  const needsDetailAlert = data && (data.main === 'Rain' || data.main === 'Drizzle' || data.main === 'Thunderstorm');
+
+  return (
+    <div className="list-item-row" style={{
+      padding: '12px',
+      borderBottom: '1px solid #eee',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      animation: 'fadeIn 0.3s ease'
+    }}>
+      {/* 左側：県名 ＋ 雨アラートバッジ */}
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+        <span style={{ fontWeight: 'bold', color: '#333' }}>{pref}</span>
+
+        {needsDetailAlert && (
+          <span style={{
+            fontSize: '0.65rem',
+            backgroundColor: '#fff1f0',
+            color: '#cf1322',
+            padding: '2px 6px',
+            borderRadius: '4px',
+            border: '1px solid #ffa39e',
+            fontWeight: 'bold',
+            whiteSpace: 'nowrap'
+          }}>
+            ☔ 雨の恐れ！詳細をチェック
+          </span>
+        )}
+      </div>
+
+      {/* 右側：数値・アイコン・詳細ボタン */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+        {data ? (
+          <>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+              <span style={{ fontSize: '0.95rem', fontWeight: 'bold' }}>{data.temp}℃</span>
+              {/* 気圧: 低い時だけ「⚠️」を出す */}
+              <span style={{
+                fontSize: '0.75rem',
+                color: isLowPressure ? '#e53935' : '#888',
+                fontWeight: isLowPressure ? 'bold' : 'normal',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '2px'
+              }}>
+                {isLowPressure && <span>⚠️</span>} {data.pressure}hPa
+              </span>
+            </div>
+            <WiComp weather={data.main} size={30} />
+          </>
+        ) : (
+          <span style={{ fontSize: '0.8rem', color: '#ccc' }}>...</span>
+        )}
+
+        <Link to={`/detail/${pref}`} className="detail-link">
+          詳細
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+/**
+ * WeatherList: 全国一覧画面のメイン
+ */
+const WeatherList = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [weatherFilter, setWeatherFilter] = useState("All");
+
+  const filteredPrefectures = allPrefectures.filter(pref => {
+    const isPrefMatch = pref.includes(searchTerm);
+    const isRegionMatch = Object.keys(regionData).some(region =>
+      region.includes(searchTerm) && regionData[region].includes(pref)
+    );
+    return isPrefMatch || isRegionMatch;
+  });
+
+  const filterOptions = [
+    { label: "すべて", value: "All" },
+    { label: "晴れ", value: "Clear" },
+    { label: "曇り", value: "Clouds" },
+    { label: "雨", value: "Rain" },
+    { label: "雪", value: "Snow" },
+  ];
+
+  return (
+    <div className="nationwide-container" style={{ padding: '20px', textAlign: 'center' }}>
+      <div style={{ textAlign: 'left', marginBottom: '15px' }}>
+        <Link to="/" className="nationwide-mini-button" style={{ backgroundColor: '#fff', color: '#546e7a' }}>
+          🏠 ホームに戻る
+        </Link>
+      </div>
+      <h2 style={{ color: '#546e7a', marginBottom: '20px' }}>全国の天気一覧</h2>
+
+      <input
+        type="text"
+        placeholder="都道府県名または地方名を入力･･･（例:東京、関東）"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        style={{
+          padding: '10px',
+          width: '85%',
+          maxWidth: '350px',
+          borderRadius: '8px',
+          border: '1px solid #ddd',
+          marginBottom: '15px',
+          fontSize: '12px'
+        }}
+      />
+
+      <div className="filter-container">
+        {filterOptions.map(opt => (
+          <button
+            key={opt.value}
+            className={`filter-btn ${weatherFilter === opt.value ? 'active' : ''}`}
+            onClick={() => setWeatherFilter(opt.value)}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="simple-list" style={{
+        textAlign: 'left',
+        maxWidth: '480px',
+        margin: '0 auto',
+        background: 'white',
+        borderRadius: '12px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
+      }}>
+        {filteredPrefectures.map(pref => (
+          <WeatherRow key={pref} pref={pref} weatherFilter={weatherFilter} />
+        ))}
+      </div>
+
+      <div style={{ marginTop: '30px' }}>
+        <Link to="/" className="back-link">
+          ← ホームに戻る
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+export default WeatherList;

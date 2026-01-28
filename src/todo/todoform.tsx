@@ -9,7 +9,7 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
   const [error, setError] = useState('');
 
   // React.ChangeEvent: 入力内容が変わったときに使う型。
-  // /React.FormEvent: フォームを送信したときに使う型。
+  // React.FormEvent: フォームを送信したときに使う型。
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
     setFormData(prevData => ({
@@ -66,7 +66,7 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
         name="text"
         value={formData.text}
         onChange={handleChange}
-        placeholder="新しいTODOを入力してください"
+        placeholder="ここに文字を入力してください"
         className="todo-input"
       />
       <div className="input-row-bottom">
@@ -76,9 +76,9 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
           onChange={handleChange}
           className="priority-select"
         >
-          <option value="low">低優先度</option>
-          <option value="medium">中優先度</option>
-          <option value="high">高優先度</option>
+          <option value="low">優先度:低</option>
+          <option value="medium">優先度:中</option>
+          <option value="high">優先度:高</option>
         </select>
         <button type="submit" className="add-button">
           追加
