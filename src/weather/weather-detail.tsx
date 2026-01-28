@@ -86,7 +86,7 @@ const WeatherDetail = () => {
                 <p className="detail-description" style={{ fontSize: '1rem', color: '#555', margin: '5px 0' }}>
                     {weather.weather[0].description}
                 </p>
-            </div>a
+            </div>
 
             {/* 基本情報グリッド */}
             <div className="detail-info-grid">
