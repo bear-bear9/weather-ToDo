@@ -88,7 +88,7 @@ const WeatherRow = ({ pref, weatherFilter }: { pref: string, weatherFilter: stri
             whiteSpace: 'nowrap',
             flexShrink: 0
           }}>
-            ☔ 雨注意！詳細→
+            ☔ 雨注意！
           </span>
         )}
       </div>
