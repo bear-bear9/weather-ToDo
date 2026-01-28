@@ -81,12 +81,12 @@ const WeatherDetail = () => {
             <h2 className="detail-title">{prefName} の現在の天気</h2>
 
             {/* 現在の天気メイン表示 */}
-            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                <WiComp weather={weather.weather[0].main} size={150} />
-                <p className="detail-description" style={{ fontSize: '1.2rem', color: '#555' }}>
+            <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+                <WiComp weather={weather.weather[0].main} size={100} />
+                <p className="detail-description" style={{ fontSize: '1rem', color: '#555', margin: '5px 0' }}>
                     {weather.weather[0].description}
                 </p>
-            </div>
+            </div>a
 
             {/* 基本情報グリッド */}
             <div className="detail-info-grid">
@@ -111,21 +111,19 @@ const WeatherDetail = () => {
             {/* 1010hpa以下の場合、 */}
             {weather.main.pressure <= 1010 && (
                 <div className="health-advice" style={{
-                    backgroundColor: '#fff3e0', padding: '15px', borderRadius: '12px',
-                    margin: '20px 0', borderLeft: '5px solid #ff9800', textAlign: 'left'
+                    backgroundColor: '#fff3e0', padding: '8px 12px', borderRadius: '12px',
+                    margin: '10px 0', borderLeft: '5px solid #ff9800', textAlign: 'left'
                 }}>
-                    <p style={{ margin: 0, color: '#e65100', fontWeight: 'bold' }}>
-                        ⚠️ 少し気圧が低めだよ
+                    <p style={{ margin: 0, color: '#e65100', fontWeight: 'bold', fontSize: '0.9rem' }}>
+                        ⚠️ 少し気圧が低めです
                     </p>
                 </div>
             )}
-
             {/* 予報 */}
-            <div className="forecast-section" style={{ width: '100%', marginTop: '40px' }}>
-                <h3 style={{ fontSize: '1.1rem', color: '#546e7a', marginBottom: '15px', textAlign: 'left' }}>
+            <div className="forecast-section" style={{ width: '100%', marginTop: '10px' }}>
+                <h3 style={{ fontSize: '1rem', color: '#546e7a', marginBottom: '8px', textAlign: 'left' }}>
                     🕒 3時間ごとの変化
                 </h3>
-
                 <div
                     className="forecast-scroll-container"
                     ref={scrollRef}
@@ -188,10 +186,11 @@ const WeatherDetail = () => {
             </div>
 
             <div className="back-link-container" style={{
-                marginTop: '40px',
-                display: 'flex',        // 横並びにする
-                justifyContent: 'center', // 中央に寄せる
-                gap: '40px'             // リンク同士の間隔を40px開ける
+                marginTop: '20px',
+                paddingBottom: '20px',
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '20px' // 隙間を 40px → 20px に
             }}>
                 <Link to="/list" className="back-link" style={{ color: '#78909c', textDecoration: 'none' }}>
                     📝 前画面に戻る

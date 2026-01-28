@@ -30,7 +30,7 @@ export default function TodoPage() {
       const finalName = nameObj ? nameObj.name : data.name;
 
       setLuckyPokemonId(randomId);
-      setLuckyPokemon(`現在のラッキーポケモンは？ ：${finalName}！`);
+      setLuckyPokemon(`現在のラッキーポケモンは？：${finalName}！`);
     } catch (error) {
       console.error("ポケモンが見つかりません:", error);
       setLuckyPokemon("今日のラッキーポケモン：ピカチュウ†");
@@ -126,7 +126,7 @@ export default function TodoPage() {
   return (
     <div className="todo-container">
       {/* ポケモンエリア */}
-      <div className="fenrir-power" onClick={goToPokedex} style={{ cursor: 'pointer' }}>
+      <div className="fenrir-power" onClick={goToPokedex} style={{ cursor: 'pointer', fontSize: '0.9rem' }}>
         {luckyPokemon}
         <div style={{ fontSize: '0.75rem', opacity: 0.8, marginTop: '4px', fontWeight: 'normal' }}>
           タップして図鑑を見る！ (※公式サイトに移動します)
