@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TodoFormProps } from './types';
 
-export function TodoForm({ onAddTodo }: TodoFormProps) {
+export function TodoForm({ onAddTodo, onCompleteAll, onDeleteAll }: TodoFormProps & { onCompleteAll: () => void, onDeleteAll: () => void }) {
   const [formData, setFormData] = useState({
     text: '',
     priority: 'medium'
@@ -66,25 +66,38 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
         name="text"
         value={formData.text}
         onChange={handleChange}
-        placeholder="ここに文字を入力してください"
+        placeholder="ここにToDoを入力してください！"
         className="todo-input"
+        style={{ width: '100%', marginBottom: '4px' }}
       />
-      <div className="input-row-bottom">
+
+      <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
         <select
           name="priority"
           value={formData.priority}
           onChange={handleChange}
-          className="priority-select"
+          style={{
+            width: '110px',
+            height: '40px',
+            borderRadius: '8px'
+          }}
         >
           <option value="low">優先度:低</option>
           <option value="medium">優先度:中</option>
           <option value="high">優先度:高</option>
         </select>
-        <button type="submit" className="add-button">
+        <button
+          type="submit"
+          style={{ flex: 2, height: '40px', backgroundColor: '#007bff', color: '#fff', borderRadius: '8px', fontWeight: 'bold' }}
+        >
           追加
         </button>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
+          <button type="button" onClick={onCompleteAll} style={{ flex: 1, fontSize: '10px', padding: '0', border: '1px solid #ddd', borderRadius: '4px' }}>一括完了</button>
+          <button type="button" onClick={onDeleteAll} style={{ flex: 1, fontSize: '10px', padding: '0', border: '1px solid #ffcccc', color: '#ff4444', borderRadius: '4px' }}>一括削除</button>
+        </div>
       </div>
-      {error && <p className="error-message">{error}</p>}
+      {error && <p style={{ color: 'red', fontSize: '10px', marginTop: '2px', textAlign: 'center' }}>{error}</p>}
     </form>
   );
 }

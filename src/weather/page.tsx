@@ -48,7 +48,7 @@ function WeatherPage({
                 gap: '8px',
                 marginBottom: '4px',
             }}>
-                <span style={{ fontSize: '0.8rem', fontWeight: 'bold', color: '#666' }}>天気検索</span>
+                <span style={{ fontSize: '0.8rem', fontWeight: 'bold', color: '#666' }}>検索</span>
                 <input
                     type="text"
                     className="weather-input"

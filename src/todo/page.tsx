@@ -55,6 +55,7 @@ export default function TodoPage() {
   }, []);
 
   // ローカルストレージ化
+
   const [todos, setTodos] = useState<Todo[]>(() => {
     const saved = localStorage.getItem('todos');
     return saved ? JSON.parse(saved) : [];
@@ -124,19 +125,15 @@ export default function TodoPage() {
 
   return (
     <div className="todo-container">
+      {/* ポケモンエリア */}
       <div className="fenrir-power" onClick={goToPokedex} style={{ cursor: 'pointer' }}>
         {luckyPokemon}
-        <div style={{
-          fontSize: '0.75rem',
-          opacity: 0.8,
-          marginTop: '4px',
-          fontWeight: 'normal'
-        }}>
+        <div style={{ fontSize: '0.75rem', opacity: 0.8, marginTop: '4px', fontWeight: 'normal' }}>
           タップして図鑑を見る！ (※公式サイトに移動します)
         </div>
       </div>
 
-      {/* 天気を表示 */}
+      {/* 天気エリア */}
       <WeatherPage
         key="weather-stable"
         totalCount={todos.length}
@@ -155,15 +152,14 @@ export default function TodoPage() {
     /> 
     */}
 
-      <TodoForm onAddTodo={addTodo} />
-      {/* バグ発生個所：動的キーにしないとヘッダーのカウントがリアルタイムで更新できなかった */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexWrap: 'wrap', // スマホで入り切らない時に自動で折り返す
-        gap: '10px'
-      }}>
+      <TodoForm
+        onAddTodo={addTodo}
+        onCompleteAll={completeAllTodos}
+        onDeleteAll={deleteAllTodos}
+      />
+
+      {/* 🌟 フィルターエリア */}
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '8px 0' }}>
         <TodoFilter
           key={`filter-${todos.length}-${todos.filter(t => t.completed).length}`}
           totalCount={todos.length}
@@ -172,11 +168,9 @@ export default function TodoPage() {
           filter={filter}
           onFilterChange={setFilter}
         />
-        <div className="bulk-actions" style={{ display: 'flex', gap: '8px' }}>
-          <button onClick={completeAllTodos} className="btn-small">全完了</button>
-          <button onClick={deleteAllTodos} className="btn-small-danger">全削除</button>
-        </div>
       </div>
+
+      {/* リストエリア */}
       <div className="todo-list">
         {todoFiltermethod.map(todo => (
           <TodoItem key={todo.id} {...todo} onToggle={toggleTodo} onDelete={deleteTodo} onEdit={editTodo} />
