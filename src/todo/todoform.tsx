@@ -67,7 +67,7 @@ export function TodoForm({ onAddTodo, onCompleteAll, onDeleteAll }: TodoFormProp
         value={formData.text}
         onChange={handleChange}
         onFocus={(e) => e.target.select()}
-        placeholder="ここにToDoを入力してください！※Enterでも追加"
+        placeholder="ここにToDoを入力してください！"
         className="todo-input"
         style={{ width: '100%', marginBottom: '4px' }}
       />

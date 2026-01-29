@@ -46,44 +46,55 @@ function WeatherPage({
             <div className="weather-upper-section" style={{
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'flex-start',
+                justifyContent: 'space-between',
                 gap: '8px',
-                marginBottom: '4px',
-                padding: '0 10px'
+                marginBottom: '8px',
+                width: '100%',
+                boxSizing: 'border-box'
             }}>
-                <span style={{ fontSize: '0.8rem', fontWeight: 'bold', color: '#666' }}>検索</span>
+                {/* 🔍 アイコン */}
+                <span style={{ fontSize: '1.1rem', flexShrink: 0 }}>🔍</span>
+
+                {/* ⌨️ 検索窓：高さを32pxに固定して文字を少し絞る */}
                 <input
                     type="text"
                     list="city-options"
                     className="weather-input"
-                    placeholder="入力してEnter"
+                    placeholder="都市名(例:東京､豊島区)"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     onKeyDown={(e) => { if (e.key === 'Enter') fetchWeather(city); }}
                     style={{
                         flex: 1,
-                        maxWidth: '250px',
-                        padding: '6px 12px',
-                        borderRadius: '4px',
-                        border: '1px solid #ccc',
-                        fontSize: '0.9rem'
+                        minWidth: '0',        // 突き抜け防止
+                        height: '32px',       // 高さを固定
+                        padding: '0 12px',    // 上下は0にしてheightに任せる
+                        borderRadius: '16px', // heightの半分
+                        border: '1px solid #007bff',
+                        fontSize: '14px',     // 文字を少し小さくしてスッキリさせる
+                        outline: 'none',
+                        backgroundColor: '#fff',
+                        boxSizing: 'border-box' // 枠線込みで32pxにする
                     }}
                 />
-                <datalist id="city-options">
-                    {citySuggestions.map((suggestion) => (
-                        <option key={suggestion} value={suggestion} />
-                    ))}
-                </datalist>
+
+                {/* 🔗 長いボタン：検索窓と高さを32pxで統一 */}
                 <Link to="/list" className="nationwide-mini-button" style={{
-                    fontSize: '0.7rem',
-                    padding: '5px 10px',
-                    borderRadius: '15px',
+                    height: '32px',          // 検索窓と完全一致
+                    fontSize: '0.65rem',
+                    padding: '0 12px',       // 左右に少し余裕
+                    borderRadius: '16px',    // 検索窓と形状を合わせる
                     backgroundColor: '#fff',
                     border: '1px solid #007bff',
                     color: '#007bff',
                     textDecoration: 'none',
                     whiteSpace: 'nowrap',
-                    flexShrink: 0
+                    flexShrink: 0,
+                    fontWeight: 'bold',
+                    display: 'flex',         // 中の文字を中央へ
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxSizing: 'border-box'  // 枠線込みで32pxにする
                 }}>
                     全国の天気や詳細はこちらから
                 </Link>
