@@ -59,7 +59,7 @@ function WeatherPage({
                 <input
                     type="text"
                     list="city-options"
-                    className="weather-input"
+                    className="weather-list-input"
                     placeholder="(例:東京､豊島区)"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
@@ -67,11 +67,10 @@ function WeatherPage({
                     style={{
                         flex: 1,
                         minWidth: '0',        // 突き抜け防止
-                        height: '40px',       // 高さを固定
+                        height: '32px',       // 高さを固定
                         padding: '0 12px',    // 上下は0にしてheightに任せる
                         borderRadius: '16px', // heightの半分
                         border: '1px solid #007bff',
-                        fontSize: '14px',     // 文字を少し小さくしてスッキリさせる
                         outline: 'none',
                         backgroundColor: '#fff',
                         boxSizing: 'border-box',
