@@ -273,3 +273,14 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* 入力欄そのものは16px（ズーム防止） */
+.weather-list-input {
+  font-size: 16px;
+}
+
+/* プレースホルダーだけを12pxにする */
+.weather-list-input::placeholder {
+  font-size: 12px;
+  color: #999;
+}

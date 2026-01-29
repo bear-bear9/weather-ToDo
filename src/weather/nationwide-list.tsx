@@ -193,17 +193,23 @@ const WeatherList = () => {
 
       <input
         type="text"
+        className="weather-list-input"
         placeholder="都道府県名または地方名を入力･･･（例:東京、関東）"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         style={{
-          padding: '10px',
+          padding: '0 15px',
           width: '85%',
           maxWidth: '350px',
-          borderRadius: '8px',
+          height: '40px',
+          borderRadius: '20px',
           border: '1px solid #ddd',
           marginBottom: '15px',
-          fontSize: '12px'
+          fontSize: '16px',
+          outline: 'none',
+          boxSizing: 'border-box',
+          backgroundColor: '#fff',
+          WebkitAppearance: 'none'
         }}
       />
 
