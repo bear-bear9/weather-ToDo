@@ -11,7 +11,7 @@ const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
  * WeatherRow: 各県の天気を1行分管理するコンポーネント
  * 絞り込み ＋ 低気圧アラート ＋ 雨予報バッジ（詳細への誘導）付き
  */
-const WeatherRow = ({ pref, weatherFilter }: { pref: string, weatherFilter: string }) => {
+const WeatherRow = ({ pref, weatherFilter, isFavorite }: { pref: string, weatherFilter: string, isFavorite: boolean }) => {
   const [data, setData] = useState<{ temp: number, main: string, pressure: number } | null>(null);
 
   useEffect(() => {
@@ -48,6 +48,8 @@ const WeatherRow = ({ pref, weatherFilter }: { pref: string, weatherFilter: stri
 
   return (
     <div className="list-item-row" style={{
+      backgroundColor: isFavorite ? '#fff9c4' : 'transparent',
+      borderLeft: isFavorite ? '4px solid #2196f3' : '4px solid transparent',
       padding: '12px',
       borderBottom: '1px solid #eee',
       display: 'flex',
@@ -147,13 +149,30 @@ const WeatherList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [weatherFilter, setWeatherFilter] = useState("All");
 
-  const filteredPrefectures = allPrefectures.filter(pref => {
+  const favoriteCity = localStorage.getItem('defaultCity');
+
+  // 1. まず全県から「検索条件に合うもの」を抽出
+  const matchedPrefectures = allPrefectures.filter(pref => {
     const isPrefMatch = pref.includes(searchTerm);
     const isRegionMatch = Object.keys(regionData).some(region =>
       region.includes(searchTerm) && regionData[region].includes(pref)
     );
     return isPrefMatch || isRegionMatch;
   });
+
+  // 2. お気に入りを一番上に、かつリスト内の重複を消すロジック
+  let finalDisplayList = [...matchedPrefectures];
+
+  if (favoriteCity) {
+    const listWithoutFavorite = matchedPrefectures.filter(pref => pref !== favoriteCity);
+    const isFavoriteHit = favoriteCity.includes(searchTerm);
+
+    if (searchTerm === "" || isFavoriteHit) {
+      finalDisplayList = [favoriteCity, ...listWithoutFavorite];
+    } else {
+      finalDisplayList = listWithoutFavorite;
+    }
+  }
 
   const filterOptions = [
     { label: "すべて", value: "All" },
@@ -224,8 +243,8 @@ const WeatherList = () => {
         borderRadius: '12px',
         boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
       }}>
-        {filteredPrefectures.map(pref => (
-          <WeatherRow key={pref} pref={pref} weatherFilter={weatherFilter} />
+        {finalDisplayList.map(pref => (
+          <WeatherRow key={pref} pref={pref} weatherFilter={weatherFilter} isFavorite={pref === favoriteCity} />
         ))}
       </div>
 

@@ -39,31 +39,41 @@ function WeatherPage({
         fetchWeather(city);
     }, [city, totalCount, uncompletedCount])
 
+    const citySuggestions = Object.keys(cityNameJp);
+
     return (
         <div className="weather-container" style={{ padding: '10px' }}>
             <div className="weather-upper-section" style={{
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
+                justifyContent: 'flex-start',
                 gap: '8px',
                 marginBottom: '4px',
+                padding: '0 10px'
             }}>
                 <span style={{ fontSize: '0.8rem', fontWeight: 'bold', color: '#666' }}>検索</span>
                 <input
                     type="text"
+                    list="city-options"
                     className="weather-input"
                     placeholder="入力してEnter"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     onKeyDown={(e) => { if (e.key === 'Enter') fetchWeather(city); }}
                     style={{
-                        width: '100px',
-                        padding: '4px 8px',
+                        flex: 1,
+                        maxWidth: '250px',
+                        padding: '6px 12px',
                         borderRadius: '4px',
                         border: '1px solid #ccc',
                         fontSize: '0.9rem'
                     }}
                 />
+                <datalist id="city-options">
+                    {citySuggestions.map((suggestion) => (
+                        <option key={suggestion} value={suggestion} />
+                    ))}
+                </datalist>
                 <Link to="/list" className="nationwide-mini-button" style={{
                     fontSize: '0.7rem',
                     padding: '5px 10px',
@@ -72,7 +82,8 @@ function WeatherPage({
                     border: '1px solid #007bff',
                     color: '#007bff',
                     textDecoration: 'none',
-                    whiteSpace: 'nowrap'
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0
                 }}>
                     全国の天気や詳細はこちらから
                 </Link>
@@ -87,7 +98,7 @@ function WeatherPage({
                         fontSize: '9px',
                         margin: 0,
                         padding: '2px 10px',
-                        backgroundColor: '#fff9db', 
+                        backgroundColor: '#fff9db',
                         borderRadius: '10px',
                         display: 'inline-block',
                         border: '1px solid #ffec99'
@@ -109,7 +120,7 @@ function WeatherPage({
                         alignItems: 'center',
                         gap: '12px'
                     }}>
-                        <p style={{ margin: 0, fontWeight: 'bold', fontSize: '1.1rem' }}>{weather.name}</p>
+                        <p style={{ margin: 0, fontWeight: 'bold', fontSize: '1.1rem' }}>{localStorage.getItem('defaultCity') || city}</p>
                         <div style={{ transform: 'scale(0.8)', margin: '-10px' }}>
                             <WiComp key={weather.name} weather={weather.weather[0].main} />
                         </div>
