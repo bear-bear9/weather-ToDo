@@ -78,7 +78,8 @@ const WeatherRow = ({ pref, weatherFilter, isFavorite }: { pref: string, weather
       <div style={{
         flex: 1,
         display: 'flex',
-        alignItems: 'center',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
         gap: '6px',
         // flexWrap: 'wrap',
         minWidth: 0,
@@ -89,7 +90,7 @@ const WeatherRow = ({ pref, weatherFilter, isFavorite }: { pref: string, weather
           color: '#333',
           whiteSpace: 'nowrap',
           fontSize: '0.95rem',
-          flexShrink: 0, 
+          flexShrink: 0,
           maxWidth: 'none'
         }}>
           {pref}
@@ -97,16 +98,15 @@ const WeatherRow = ({ pref, weatherFilter, isFavorite }: { pref: string, weather
 
         {needsDetailAlert && (
           <span style={{
-            fontSize: '0.6rem',
+            fontSize: '0.65rem',
             backgroundColor: '#fff1f0',
             color: '#cf1322',
-            padding: '2px 4px',
+            padding: '2px 6px',
             borderRadius: '4px',
             border: '1px solid #ffa39e',
             fontWeight: 'bold',
             whiteSpace: 'nowrap',
-            flexShrink: 1,
-            overflow: 'hidden'
+            width: 'fit-content'
           }}>
             ☔ 雨注意！
           </span>
