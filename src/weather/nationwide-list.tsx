@@ -12,7 +12,7 @@ const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
  * 絞り込み ＋ 低気圧アラート ＋ 雨予報バッジ（詳細への誘導）付き
  */
 const WeatherRow = ({ pref, weatherFilter, isFavorite }: { pref: string, weatherFilter: string, isFavorite: boolean }) => {
-  const [data, setData] = useState<{ temp: number, main: string, pressure: number } | null>(null);
+  const [data, setData] = useState<{ temp: number, main: string, pressure: number, willRain: boolean } | null>(null);
 
   useEffect(() => {
     const fetchSmallWeather = async () => {
@@ -23,11 +23,24 @@ const WeatherRow = ({ pref, weatherFilter, isFavorite }: { pref: string, weather
       try {
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${englishName},jp&appid=${API_KEY}&units=metric`;
         const res = await axios.get(url);
+        let willRainSoon = false;
+
+        // お気に入り都市のみ雨予報を呼び出す
+        if (isFavorite) {
+          const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${englishName},jp&appid=${API_KEY}&units=metric`;
+          const fRes = await axios.get(forecastUrl);
+          // 直近3〜6時間（index 0〜1）に雨があるか判定
+          willRainSoon = fRes.data.list.slice(0, 2).some((item: any) =>
+            item.weather[0].main === 'Rain'
+          );
+        }
+
         setData({
           temp: Math.round(res.data.main.temp),
           main: res.data.weather[0].main,
           // 自分が低気圧でしんどいので、気圧機能を追加
-          pressure: res.data.main.pressure
+          pressure: res.data.main.pressure,
+          willRain: willRainSoon
         });
       } catch (e) {
         console.error(`${pref}のデータ取得に失敗:`, e);
@@ -44,8 +57,12 @@ const WeatherRow = ({ pref, weatherFilter, isFavorite }: { pref: string, weather
   // アラート判定（1010hPa以下を注意に設定）
   const isLowPressure = data && data.pressure <= 1010;
   // 雨、または詳細を見てほしい天候
-  const needsDetailAlert = data && (data.main === 'Rain' || data.main === 'Drizzle' || data.main === 'Thunderstorm');
-
+  const needsDetailAlert = isFavorite && data && (
+    data.main === 'Rain' ||
+    data.main === 'Drizzle' ||
+    data.main === 'Thunderstorm' ||
+    data.willRain
+  );
   return (
     <div className="list-item-row" style={{
       backgroundColor: isFavorite ? '#fff9c4' : 'transparent',
@@ -62,8 +79,8 @@ const WeatherRow = ({ pref, weatherFilter, isFavorite }: { pref: string, weather
         flex: 1,
         display: 'flex',
         alignItems: 'center',
-        gap: '4px',
-        flexWrap: 'wrap',
+        gap: '6px',
+        // flexWrap: 'wrap',
         minWidth: 0,
         overflow: 'hidden'
       }}>
@@ -71,9 +88,9 @@ const WeatherRow = ({ pref, weatherFilter, isFavorite }: { pref: string, weather
           fontWeight: 'bold',
           color: '#333',
           whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          maxWidth: '80px'
+          fontSize: '0.95rem',
+          flexShrink: 0, 
+          maxWidth: 'none'
         }}>
           {pref}
         </span>
@@ -83,12 +100,13 @@ const WeatherRow = ({ pref, weatherFilter, isFavorite }: { pref: string, weather
             fontSize: '0.6rem',
             backgroundColor: '#fff1f0',
             color: '#cf1322',
-            padding: '1px 4px',
+            padding: '2px 4px',
             borderRadius: '4px',
             border: '1px solid #ffa39e',
             fontWeight: 'bold',
             whiteSpace: 'nowrap',
-            flexShrink: 0
+            flexShrink: 1,
+            overflow: 'hidden'
           }}>
             ☔ 雨注意！
           </span>

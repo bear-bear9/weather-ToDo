@@ -18,6 +18,8 @@ function WeatherPage({
     const [city, setCity] = useState(localStorage.getItem('defaultCity') || '埼玉');
     const [weather, setWeather] = useState<WeatherData | null>(null);
     const [error, setError] = useState('');
+    // ユーザーがホーム画面で雨予報を検知できるように追加
+    const [isRainySoon, setIsRainySoon] = useState(false);
     // バグ発生個所：高知県がインドのkochinを参照してしまう問題への対策済み
     const fetchWeather = async (cityName: string) => {
         const pureName = cityName.replace(/[都府県道]$/, "");
@@ -25,8 +27,19 @@ function WeatherPage({
 
         try {
             const url = `https://api.openweathermap.org/data/2.5/weather?q=${englishName},jp&appid=${API_KEY}&units=metric&lang=ja`;
-            const response = await axios.get(url);
-            setWeather(response.data);
+            const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${englishName},jp&appid=${API_KEY}&units=metric&lang=ja`;
+            const [res, forecastRes] = await Promise.all([
+                axios.get(url),
+                axios.get(forecastUrl)
+            ]);
+            setWeather(res.data);
+
+            // 24時間以内（3時間×8回分）に雨があるか判定
+            const hasRain = forecastRes.data.list.slice(0, 8).some((item: any) =>
+                item.weather[0].main.includes('Rain')
+            );
+            setIsRainySoon(hasRain);
+
             localStorage.setItem('defaultCity', cityName);
             setError('');
         } catch (err) {
@@ -78,6 +91,11 @@ function WeatherPage({
                         transformOrigin: 'left center'
                     }}
                 />
+                <datalist id="city-options">
+                    {Object.keys(cityNameJp).map((name) => (
+                        <option key={name} value={name} />
+                    ))}
+                </datalist>
 
                 {/* 🔗 長いボタン：検索窓と高さを32pxで統一 */}
                 <Link to="/list" className="nationwide-mini-button" style={{
@@ -97,7 +115,7 @@ function WeatherPage({
                     justifyContent: 'center',
                     boxSizing: 'border-box'  // 枠線込みで32pxにする
                 }}>
-                    全国の天気や詳細はこちらから
+                    {isRainySoon ? '☔ 雨予報あり！詳細を確認' : '全国の天気や詳細はこちらから'}
                 </Link>
             </div>
             <div style={{ minHeight: '14px', marginBottom: '8px' }}>
