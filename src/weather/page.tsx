@@ -87,7 +87,13 @@ function WeatherPage({
                         outline: 'none',
                         backgroundColor: '#fff',
                         boxSizing: 'border-box',
-                        fontSize: '14px'
+
+                        /* ズーム対策 */
+                        // iOSでズームされないための最低ライン
+                        fontSize: '16px',
+                        transform: 'scale(0.85)',
+                        transformOrigin: 'left center',
+                        width: '115%',
                     }}
                 />
                 <datalist id="city-options">
