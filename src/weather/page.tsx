@@ -10,12 +10,10 @@ const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 
 function WeatherPage({
     totalCount,
-    uncompletedCount,
-    externalCity
+    uncompletedCount
 }: {
     totalCount: number,
     uncompletedCount: number
-    externalCity?: string
 }) {
     const [city, setCity] = useState(localStorage.getItem('defaultCity') || '埼玉');
     const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -54,13 +52,6 @@ function WeatherPage({
         fetchWeather(city);
     }, [city, totalCount, uncompletedCount])
 
-    useEffect(() => {
-        if (externalCity) {
-            setCity(externalCity);
-            fetchWeather(externalCity);
-        }
-    }, [externalCity]);
-
     const citySuggestions = Object.keys(cityNameJp);
 
     return (
@@ -69,7 +60,7 @@ function WeatherPage({
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                gap: '8px',
+                gap: '5px',
                 marginBottom: '8px',
                 width: '100%',
                 boxSizing: 'border-box'
@@ -77,7 +68,7 @@ function WeatherPage({
                 {/* 🔍 アイコン */}
                 <span style={{ fontSize: '1.1rem', flexShrink: 0 }}>🔍</span>
 
-                {/* ⌨️ 検索窓：高さを32pxに固定して文字を少し絞る */}
+                {/* ⌨️ 検索窓：scaleを廃止して flex で幅を確保 */}
                 <input
                     type="text"
                     list="city-options"
@@ -87,17 +78,16 @@ function WeatherPage({
                     onChange={(e) => setCity(e.target.value)}
                     onKeyDown={(e) => { if (e.key === 'Enter') fetchWeather(city); }}
                     style={{
-                        flex: 1,
-                        minWidth: '0',        // 突き抜け防止
-                        height: '32px',       // 高さを固定
-                        padding: '0 12px',    // 上下は0にしてheightに任せる
-                        borderRadius: '16px', // heightの半分
+                        flex: 1.5,
+                        minWidth: '0',
+                        height: '32px',
+                        padding: '0 12px',
+                        borderRadius: '16px',
                         border: '1px solid #007bff',
                         outline: 'none',
                         backgroundColor: '#fff',
                         boxSizing: 'border-box',
-                        transform: 'scale(0.8)',
-                        transformOrigin: 'left center'
+                        fontSize: '14px'
                     }}
                 />
                 <datalist id="city-options">
@@ -106,12 +96,13 @@ function WeatherPage({
                     ))}
                 </datalist>
 
-                {/* 🔗 長いボタン：検索窓と高さを32pxで統一 */}
+                {/* 🔗 ボタン：名前は維持！ */}
                 <Link to="/list" className="nationwide-mini-button" style={{
-                    height: '32px',          // 検索窓と完全一致
+                    flex: 1,                  // 🌟 必要最小限の幅でボタンを確保
+                    height: '32px',
                     fontSize: '0.65rem',
-                    padding: '0 12px',       // 左右に少し余裕
-                    borderRadius: '16px',    // 検索窓と形状を合わせる
+                    padding: '0 10px',        // 左右のパディングを微調整
+                    borderRadius: '16px',
                     backgroundColor: '#fff',
                     border: '1px solid #007bff',
                     color: '#007bff',
@@ -119,32 +110,20 @@ function WeatherPage({
                     whiteSpace: 'nowrap',
                     flexShrink: 0,
                     fontWeight: 'bold',
-                    display: 'flex',         // 中の文字を中央へ
+                    display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxSizing: 'border-box'  // 枠線込みで32pxにする
+                    boxSizing: 'border-box'
                 }}>
-                    {isRainySoon ? '☔ 雨予報あり！詳細を確認' : '全国の天気や詳細はこちらから'}
+                    {isRainySoon ? '☔ 雨予報あり！詳細へ' : '全国の天気や詳細はこちら'}
                 </Link>
             </div>
-            <div style={{ minHeight: '14px', marginBottom: '8px' }}>
+            <div style={{ minHeight: error ? '14px' : '0', marginBottom: error ? '8px' : '0' }}>
                 {error ? (
                     <p style={{ color: 'red', fontSize: '10px', margin: 0, textAlign: 'center', fontWeight: 'bold' }}>
                         ⚠️ {error}
-                    </p>) : (
-                    <p style={{
-                        color: '#555',
-                        fontSize: '9px',
-                        margin: 0,
-                        padding: '2px 10px',
-                        backgroundColor: '#fff9db',
-                        borderRadius: '10px',
-                        display: 'inline-block',
-                        border: '1px solid #ffec99'
-                    }}>
-                        💡 <span style={{ fontWeight: 'bold' }}>便利な機能:</span> 検索した都市が次回から自動で表示されます
                     </p>
-                )}
+                ) : null}
             </div>
             {weather && (
                 <div className="weather-lower-section" style={{
@@ -200,7 +179,6 @@ function WeatherPage({
 export default memo(WeatherPage, (prevProps, nextProps) => {
     return (
         prevProps.totalCount === nextProps.totalCount &&
-        prevProps.uncompletedCount === nextProps.uncompletedCount &&
-        prevProps.externalCity === nextProps.externalCity
+        prevProps.uncompletedCount === nextProps.uncompletedCount
     );
 });
