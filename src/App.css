@@ -158,3 +158,57 @@
 .btn-small-danger:hover {
   background-color: #f2dede;
 }
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background-color: #ffffff; /* 清潔感のある白 */
+  height: 64px;             /* 高さを少しだけアップ */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  
+  /* 🌟 修正ポイント：外側の余白をなくして横幅いっぱいにする */
+  margin: 0; 
+  
+  /* 🌟 修正ポイント：丸みを抑えて角ばらせる（または 0px ） */
+  border-radius: 0 0 8px 8px; /* 下の角だけ少し丸める程度 */
+  
+  /* 下側の境界線をはっきりさせて、他の領域との区切りを作る */
+  border-bottom: 2px solid #f0f4f8; 
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.header-logo-capsule {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px;
+  border-radius: 8px;
+}
+
+.header-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #455a64;
+  margin: 0 2px;
+}
+.menu-icon, .search-icon {
+  color: #78909c;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.25s ease;
+}
+
+.menu-icon:hover, .search-icon:hover {
+  background-color: #f0f4f8;
+  color: #ffa726;
+  transform: scale(1.1);
+}
+
+.menu-icon:active {
+  transform: scale(0.9);
+}

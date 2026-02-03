@@ -20,3 +20,9 @@ export interface WeatherProps {
   totalCount: number;
   uncompletedCount: number;
 }
+
+export interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onCitySelect: (city: string) => void;
+}

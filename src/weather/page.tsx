@@ -10,10 +10,12 @@ const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 
 function WeatherPage({
     totalCount,
-    uncompletedCount
+    uncompletedCount,
+    externalCity
 }: {
     totalCount: number,
     uncompletedCount: number
+    externalCity?: string
 }) {
     const [city, setCity] = useState(localStorage.getItem('defaultCity') || '埼玉');
     const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -51,6 +53,13 @@ function WeatherPage({
     useEffect(() => {
         fetchWeather(city);
     }, [city, totalCount, uncompletedCount])
+
+    useEffect(() => {
+        if (externalCity) {
+            setCity(externalCity);
+            fetchWeather(externalCity);
+        }
+    }, [externalCity]);
 
     const citySuggestions = Object.keys(cityNameJp);
 
@@ -191,6 +200,7 @@ function WeatherPage({
 export default memo(WeatherPage, (prevProps, nextProps) => {
     return (
         prevProps.totalCount === nextProps.totalCount &&
-        prevProps.uncompletedCount === nextProps.uncompletedCount
+        prevProps.uncompletedCount === nextProps.uncompletedCount &&
+        prevProps.externalCity === nextProps.externalCity
     );
 });

@@ -204,7 +204,7 @@ const WeatherList = () => {
     <div className="nationwide-container" style={{ padding: '20px', textAlign: 'center' }}>
       <div style={{ textAlign: 'left', marginBottom: '15px' }}>
         <Link to="/" className="nationwide-mini-button" style={{ backgroundColor: '#fff', color: '#546e7a' }}>
-          🏠 ホームに戻る
+          🏠 TODOに戻る
         </Link>
       </div>
       <h2 style={{ color: '#546e7a', marginBottom: '20px' }}>全国の天気一覧</h2>
@@ -274,7 +274,7 @@ const WeatherList = () => {
 
       <div style={{ marginTop: '30px' }}>
         <Link to="/" className="back-link">
-          ← ホームに戻る
+          🏠 TODOに戻る
         </Link>
       </div>
     </div>

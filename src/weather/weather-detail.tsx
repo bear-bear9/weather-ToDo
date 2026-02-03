@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { cityNameJp } from './utils';
 import WiComp from './WiComp';
+import { Star } from 'lucide-react';
 import './layout.css';
 
 const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
@@ -16,6 +17,26 @@ const WeatherDetail = () => {
     const [weather, setWeather] = useState<any>(null);
     const [forecast, setForecast] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    // お気に入り機能の追加
+    useEffect(() => {
+        const favs = JSON.parse(localStorage.getItem('favorites') || '[]');
+        setIsFavorite(favs.includes(prefName));
+    }, [prefName]);
+
+    const toggleFavorite = () => {
+        const favs = JSON.parse(localStorage.getItem('favorites') || '[]');
+        let newFavs;
+        if (favs.includes(prefName)) {
+            newFavs = favs.filter((f: string) => f !== prefName);
+            setIsFavorite(false);
+        } else {
+            newFavs = [...favs, prefName];
+            setIsFavorite(true);
+        }
+        localStorage.setItem('favorites', JSON.stringify(newFavs));
+    };
 
     // PCでの横スクロール操作を直接制御するためのRef
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -78,7 +99,22 @@ const WeatherDetail = () => {
 
     return (
         <div className="nationwide-container detail-page">
-            <h2 className="detail-title">{prefName} の現在の天気</h2>
+<h2 className="detail-title" style={{ 
+                fontSize: '1.2rem', margin: '5px 0', display: 'flex', 
+                alignItems: 'center', justifyContent: 'center', gap: '8px' 
+            }}>
+                {prefName} の天気
+                <Star 
+                    size={26} 
+                    onClick={toggleFavorite}
+                    style={{ 
+                        cursor: 'pointer',
+                        fill: isFavorite ? "#FFD700" : "none",    // 登録済みなら中を黄色に
+                        color: isFavorite ? "#FFD700" : "#ccc",  // 縁の色
+                        transition: 'all 0.3s ease'               // 🌸 ふわっと変わる演出
+                    }} 
+                />
+            </h2>
 
             {/* 現在の天気メイン表示 */}
             <div style={{ textAlign: 'center', marginBottom: '10px' }}>
@@ -197,7 +233,7 @@ const WeatherDetail = () => {
                 </Link>
 
                 <Link to="/" className="back-link" style={{ color: '#78909c', textDecoration: 'none' }}>
-                    🏠 ホームに戻る
+                    🏠 TODOに戻る
                 </Link>
             </div>
         </div>
