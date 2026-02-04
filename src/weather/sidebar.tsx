@@ -130,6 +130,66 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onCitySelect }) => {
                         </React.Fragment>
                     ))}
                 </List>
+                {/* ガイド機能 */}
+                <div style={{ marginTop: 'auto', padding: '10px' }}>
+                    <details style={{
+                        backgroundColor: '#fdfdfd',
+                        borderRadius: '12px',
+                        border: '1px solid #e3f2fd',
+                        overflow: 'hidden',
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
+                    }}>
+                        <summary style={{
+                            listStyle: 'none',
+                            cursor: 'pointer',
+                            padding: '12px',
+                            fontSize: '0.85rem',
+                            fontWeight: 'bold',
+                            color: '#455a64',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            outline: 'none'
+                        }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                <span>🔰</span> 使いかたガイド
+                            </div>
+                            <span style={{ fontSize: '0.7rem', opacity: 0.6 }}>▼ タップで開く</span>
+                        </summary>
+
+                        <div style={{
+                            padding: '0 12px 12px 12px',
+                            fontSize: '0.8rem',
+                            color: '#607d8b',
+                            borderTop: '1px solid #f0f4f8'
+                        }}>
+                            <ul style={{
+                                listStyle: 'none',
+                                padding: 0,
+                                margin: '10px 0 0 0',
+                                lineHeight: '1.6'
+                            }}>
+                                <li style={{ marginBottom: '12px' }}>
+                                    <strong style={{ color: '#0288d1', display: 'block' }}>🏠 ホーム</strong>
+                                    検索した場所の現在の天気の確認とTODOを付けることができます。<br />
+                                    検索した場所は自動で保存され、次回からすぐに天気を確認できます。
+                                </li>
+
+                                <li style={{ marginBottom: '12px' }}>
+                                    <strong style={{ color: '#0288d1', display: 'block' }}>📝 TODOをつける</strong>
+                                    今日やりたいことをメモしましょう。<br />
+                                    終わったら左の□をタップして完了！
+                                </li>
+
+                                <li style={{ marginBottom: '12px' }}>
+                                    <strong style={{ color: '#0288d1', display: 'block' }}>⭐ お気に入り機能</strong>
+                                    詳細画面で⭐を押すと、このメニューに追加されます。<br />
+                                    メニューから1回押すだけで詳細画面に移動できるようになるので便利です。
+                                </li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
             </div>
         </Drawer>
     );
