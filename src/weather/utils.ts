@@ -76,7 +76,51 @@ export const cityNameJp: { [key: string]: string } = {
 
   // 九州・沖縄
   "福岡": "Fukuoka", "北九州": "Kitakyushu", "佐賀": "Saga", "長崎": "Nagasaki",
-  "熊本": "Kumamoto", "大分": "Oita", "宮崎": "Miyazaki", "鹿児島": "Kagoshima", "沖縄": "Okinawa"
+  "熊本": "Kumamoto", "大分": "Oita", "宮崎": "Miyazaki", "鹿児島": "Kagoshima", "沖縄": "Okinawa",
+
+  // --- 追加：観光・レジャー地（市区町村・エリア単位） ---
+  // 北海道・東北
+  "小樽": "Otaru", "函館": "Hakodate", "松島": "Matsushima", "会津若松": "Aizuwakamatsu",
+
+  // 関東
+  "日光": "Nikko", "那須": "Nasu", "箱根": "Hakone",
+
+  // 中部・北陸
+  "熱海": "Atami", 
+  "伊東": "Ito",
+  "富士河口湖": "Fujikawaguchiko",
+  "軽井沢": "Karuizawa",
+  "高山": "Takayama",
+  "白川": "Shirakawa",
+  "金沢": "Kanazawa",
+
+  // 近畿・中国・四国
+  "伊勢": "Ise", "鳥羽": "Toba", "南紀白浜": "Shirahama", "宮島": "Miyajima",
+  "出雲": "Izumo", "鳴門": "Naruto", "松山": "Matsuyama",
+
+  // 九州・沖縄
+  "別府": "Beppu", "由布院": "Yufuin", "指宿": "Ibusuki", "石垣": "Ishigaki", "宮古島": "Miyakojima",
+
+  // --- 追加：栃木（市レベル網羅） ---
+  "足利": "Ashikaga", "佐野": "Sano", "鹿沼": "Kanuma", "小山": "Oyama", 
+  "真岡": "Moka", "大田原": "Otawara", "矢板": "Yaita", "那須塩原": "Nasushiobara", 
+  "さくら": "Sakura", "那須烏山": "Nasukarasuyama", "下野": "Shimotsuke",
+
+  // --- 追加：群馬（市レベル網羅＋α） ---
+  "桐生": "Kiryu", "伊勢崎": "Isesaki", "太田": "Ota", "沼田": "Numata", 
+  "館林": "Tatebayashi", "渋川": "Shibukawa", "藤岡": "Fujioka", "富岡": "Tomioka", 
+  "安中": "Annaka", "みどり": "Midori", "みなかみ": "Minakami", "草津": "Kusatsu",
+
+  // --- 追加：全国主要観光地・都市の補完 ---
+  "旭川": "Asahikawa", "稚内": "Wakkanai", "弘前": "Hirosaki", "八戸": "Hachinohe",
+  "盛岡": "Morioka", "花巻": "Hanamaki", "石巻": "Ishinomaki", "角館": "Kakunodate",
+  "米沢": "Yonezawa", "郡山": "Koriyama", "奥多摩": "Okutama", "木更津": "Kisarazu",
+  "下田": "Shimoda", "犬山": "Inuyama", "彦根": "Hikone", "天橋立": "Amanohashidate",
+  "姫路": "Himeji", "城崎": "Kinosaki", "那智勝浦": "Nachikatsuura", "倉敷": "Kurashiki",
+  "福山": "Fukuyama", "廿日市": "Hatsukaichi", "下関": "Shimonoseki", "小豆島": "Shodoshima",
+  "今治": "Imabari", "四万十": "Shimanto", "太宰府": "Dazaifu", "阿蘇": "Aso", 
+  "屋久島": "Yakushima", "那覇": "Naha"
+
 };
 
 // 検索用に地域別での検索を追加
