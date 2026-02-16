@@ -260,6 +260,11 @@
   text-align: center;
 }
 
+.todo-item.completed {
+  opacity: 0.6;
+  filter: grayscale(0.5);
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -21,7 +21,7 @@ export default function TodoItem({ id, text, completed, priority, onToggle, onDe
   };
   
   return (
-    <div className={`todo-item priority-${priority}`}>
+    <div className={`todo-item priority-${priority} ${completed ? 'completed' : ''}`}>
       <input
         type="checkbox"
         checked={completed}
@@ -37,7 +37,7 @@ export default function TodoItem({ id, text, completed, priority, onToggle, onDe
             autoFocus
           />
           <button onClick={handleSave} className="save-button">保存</button>
-          <button onClick={() => { setIsEditing(false); setEditText(text); }} className="cancel-button">キャンセル</button>
+          <button onClick={() => { setIsEditing(false); setEditText(text); }} className="cancel-button">取消</button>
         </div>
       ) : (
         <div className="todo-content">

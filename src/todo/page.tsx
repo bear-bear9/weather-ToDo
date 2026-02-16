@@ -172,9 +172,25 @@ export default function TodoPage() {
 
       {/* リストエリア */}
       <div className="todo-list" style={{ marginTop: '0px' }}>
-        {todoFiltermethod.map(todo => (
-          <TodoItem key={todo.id} {...todo} onToggle={toggleTodo} onDelete={deleteTodo} onEdit={editTodo} />
-        ))}
+        {/* 元の配列を壊さないようにコピー([...])してからソート */}
+        {[...todoFiltermethod]
+          .sort((a, b) => {
+            // 完了(true)なら後ろ(1)、未完了(false)なら前(-1)
+            if (a.completed !== b.completed) {
+              return a.completed ? 1 : -1;
+            }
+            // 同じ完了状態同士なら、IDが新しい順に並べる
+            return b.id - a.id;
+          })
+          .map(todo => (
+            <TodoItem
+              key={todo.id}
+              {...todo}
+              onToggle={toggleTodo}
+              onDelete={deleteTodo}
+              onEdit={editTodo}
+            />
+          ))}
       </div>
     </div>
   );
